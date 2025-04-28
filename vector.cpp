@@ -16,6 +16,8 @@ Vector::Vector(int s) : elements{new double[s]}, size_{s} {}
 
 double &Vector::operator[](int i)
 {
+  if (i < 0 || i >= size())
+    throw out_of_range { "Vector::operator[]" };
   return elements[i];
 }
 
