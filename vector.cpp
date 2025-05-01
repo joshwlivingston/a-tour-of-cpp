@@ -1,3 +1,5 @@
+import std;
+
 export module Vector;
 
 export class Vector {
@@ -12,12 +14,17 @@ private:
 };
 
 
-Vector::Vector(int s) : elements{new double[s]}, size_{s} {}
+Vector::Vector(int s) {
+  if (s < 0)
+    throw std::length_error { "Vector constructor: negative size" };
+  elements  = new double[s];
+  size_ = s;
+}
 
 double &Vector::operator[](int i)
 {
   if (i < 0 || i >= size())
-    throw out_of_range { "Vector::operator[]" };
+    throw std::out_of_range { "Vector::operator[]" };
   return elements[i];
 }
 
@@ -34,4 +41,25 @@ export bool operator==(const Vector &lhs, const Vector &rhs)
     if (rhs[i] != lhs[i])
       return false;
   return true;
+}
+
+void test_vector(int n)
+{
+  try {
+    Vector v(n);
+  }
+  catch (std::length_error &err) {
+    std::cerr << "test failed: length error\n";
+    throw;
+  }
+  catch (std::bad_allod &err) {
+    std::terminate();
+  }
+}
+
+void run_test_vector()
+{
+  test(-27);               // throws length_error
+  test(1'000'000'000'000); // may throw bad_alloc
+  test(10);                // OK
 }
