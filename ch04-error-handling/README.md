@@ -49,12 +49,12 @@ Invariants provide several benefits:
 The _constructor's_ role is to _establish_ the variant for a class. The _member
 functions_ must ensure the invariant still holds before they exit.
 
-In our Vector defintions, the following is "valid":
+In our Vector definitions, the following is "valid":
 
 ```cpp
 // Initialize a size -27 vector
 Vector v(-27); // Who knows what will happen?
 ```
 
-Instead, it would be better to not allow such construction, by estiablishing
+Instead, it would be better to not allow such construction, by establishing
 the invariant.
